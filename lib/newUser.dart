@@ -18,7 +18,7 @@ class _newUserState extends State<newUser> {
   TextEditingController _dui = TextEditingController();
   TextEditingController _usuario = TextEditingController();
   bool estado=false;
-  late bool sexo=false;
+  late bool sexo=true;
   
   _guardar (){
   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -47,10 +47,10 @@ class _newUserState extends State<newUser> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    IconButton(icon:Icon(Icons.boy) ,onPressed: (){estado=true; sexo=true;setState(() {
+                    IconButton( iconSize: 45, icon:Icon(Icons.boy), color: sexo==true?Colors.green:Colors.white ,onPressed: (){estado=true; sexo=true;setState(() {
                       
                     });},),
-                    IconButton(icon:Icon(Icons.girl_rounded) ,onPressed: (){ estado =true;sexo=false; setState(() {
+                    IconButton(iconSize:45 , icon:Icon(Icons.girl_rounded), color: sexo==false? Colors.green:Colors.white ,onPressed: (){ estado =true;sexo=false; setState(() {
                       
                     });},),
                   ],
