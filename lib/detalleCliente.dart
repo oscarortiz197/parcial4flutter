@@ -6,7 +6,8 @@ import 'package:flutter/src/widgets/framework.dart';
 
 class detalle extends StatefulWidget {
   final String idCliente;
-  const detalle({super.key, required this.idCliente});
+  final bool estado;
+  const detalle({super.key, required this.idCliente,required this.estado});
 
   @override
   State<detalle> createState() => _detalleState();
@@ -70,7 +71,7 @@ class _detalleState extends State<detalle> {
     if (_snapshot != null) {
       return Scaffold(
         appBar: AppBar(
-          title: Text("Detalle cliente"),
+          title: widget.estado==false? Text("Detalle cliente"):Text("Actualizar cliente"),
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -102,7 +103,14 @@ class _detalleState extends State<detalle> {
                 ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(onPressed: (){_actualizar();},child: Icon(Icons.save)),
+        floatingActionButton: FloatingActionButton(onPressed: (){
+          if (widget.estado==true){
+            _actualizar();
+          }else{
+            Navigator.pop(context);
+          }
+          
+          },child: widget.estado==true? Icon(Icons.save):Icon(Icons.arrow_back)),
       );
     } else {
       return Scaffold(
