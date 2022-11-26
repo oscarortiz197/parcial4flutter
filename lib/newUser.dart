@@ -17,6 +17,8 @@ class _newUserState extends State<newUser> {
   TextEditingController _apellido = TextEditingController();
   TextEditingController _dui = TextEditingController();
   TextEditingController _usuario = TextEditingController();
+  bool estado=false;
+  late bool sexo=false;
   
   _guardar (){
   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -42,6 +44,17 @@ class _newUserState extends State<newUser> {
                 SizedBox(height: 20,),
                 TextField(controller: _apellido, decoration:const InputDecoration(label: Text("Apellido:")),),
                 SizedBox(height: 20,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(icon:Icon(Icons.boy) ,onPressed: (){estado=true; sexo=true;setState(() {
+                      
+                    });},),
+                    IconButton(icon:Icon(Icons.girl_rounded) ,onPressed: (){ estado =true;sexo=false; setState(() {
+                      
+                    });},),
+                  ],
+                ),
                 TextField(controller: _dui, decoration: const InputDecoration(label: Text("Dui:")),),
                 SizedBox(height: 20,),
                 TextField( controller: _usuario, decoration:const InputDecoration(label: Text("Usuario:")),),
@@ -58,17 +71,22 @@ class _newUserState extends State<newUser> {
            final String dui = _dui.text;
            final String usuario = _usuario.text;
                     
-                    if (nombre != null && apellido != null  ) {
+                    if (estado ==true && nombre != '' && apellido != '' && dui != '' && usuario!='') {
+                      estado=false;
                       await clientes
                           .add({"apellido": apellido, "cedula": dui,
-                             "nombre":nombre,"usuario":usuario
-                          });
+                             "nombre":nombre,"usuario":usuario,'sexo':sexo
+                          }
+                          
+                          );
 
                       _nombreCliente.text = '';
                       _apellido.text = '';
                        _dui.text = '';
                          _usuario.text = '';
                       Navigator.of(context).pop();
+        }else{
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("ingrese todos los datos")));
         }
         }
       ),
